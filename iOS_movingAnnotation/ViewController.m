@@ -339,7 +339,7 @@ static CLLocationCoordinate2D s_coords[] =
     
     [self setUpMoveTimer];
     
-    [self setUpBtn];
+//    [self setUpBtn];
     
 }
 
@@ -482,11 +482,11 @@ static CLLocationCoordinate2D s_coords[] =
     
     
 //    NSInteger duration = [self timeIntervalFromLastTime:self.lastDate ToCurrentTime:[NSDate date]] * 4;
-    NSInteger duration = 3;
+    NSInteger duration = 1;
     NSDictionary *t_dic = @{@"polyline":polyStr,@"duration":[NSNumber numberWithInteger:duration]};
     [self.moveModelArray addObject:t_dic];
     
-    NSLog(@"规划的路径点集合 ====  %@ ,此时的数据源数组 = %@",polyStr,self.moveModelArray);
+//    NSLog(@"规划的路径点集合 ====  %@ ,此时的数据源数组 = %@",polyStr,self.moveModelArray);
     
 }
 
@@ -556,7 +556,7 @@ static CLLocationCoordinate2D s_coords[] =
         
         if (self.moveModelArray.count >= self.times) {
             
-            NSLog(@"小车开始移动前的数据源 = %@",self.moveModelArray);
+//            NSLog(@"小车开始移动前的数据源 = %@",self.moveModelArray);
             NSString *polyline;
             CGFloat duration;
             
@@ -581,7 +581,7 @@ static CLLocationCoordinate2D s_coords[] =
             NSDictionary *t_dic = @{@"polyline":polyline,@"duration":[NSNumber numberWithInteger:duration]};
             [self moveAnimationWithDictionary:t_dic];
             
-            NSLog(@"小车开始移动时的数据源 = %@,时长 = %f",self.moveModelArray,duration);
+//            NSLog(@"小车开始移动时的数据源 = %@,时长 = %f",self.moveModelArray,duration);
             
         }
         
@@ -589,31 +589,31 @@ static CLLocationCoordinate2D s_coords[] =
     
 }
 
-- (void)setUpBtn{
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(50, 50, 50, 50);
-    [btn setTitle:@"start" forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:btn];
-    
-    [btn addTarget:self action:@selector(handBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    
-}
-
-- (void)handBtnAction{
-
-    if (self.carIsMoving == NO) {
-        self.times++;
-        [self.mapView removeAnnotations:self.mapView.annotations];
-        self.canUse = YES;
-        self.isSearchPlan = NO;
-        self.otherStatus = NO;
-        self.status = NO;
-        _carMoveAnnotation = nil;
-
-    }
-    
-}
+//- (void)setUpBtn{
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = CGRectMake(50, 50, 50, 50);
+//    [btn setTitle:@"start" forState:UIControlStateNormal];
+//    btn.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:btn];
+//    
+//    [btn addTarget:self action:@selector(handBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//    
+//}
+//
+//- (void)handBtnAction{
+//
+//    if (self.carIsMoving == NO) {
+//        self.times++;
+//        [self.mapView removeAnnotations:self.mapView.annotations];
+//        self.canUse = YES;
+//        self.isSearchPlan = NO;
+//        self.otherStatus = NO;
+//        self.status = NO;
+//        _carMoveAnnotation = nil;
+//
+//    }
+//    
+//}
 
 - (void)tracePointWithStart:(CLLocationCoordinate2D )startCoordinate end:(CLLocationCoordinate2D )endCoordinate{
 
@@ -621,7 +621,7 @@ static CLLocationCoordinate2D s_coords[] =
     __weak typeof (self) weakSelf = self;
     [self traceCorrectWithFirstPoint:startCoordinate andSecondPoint:endCoordinate finishBlock:^(NSArray *points, BOOL success) {
         if (success) {
-            NSLog(@"纠偏数组 = %@",points);
+//            NSLog(@"纠偏数组 = %@",points);
             
             if (points.count > 1) {
                 MATracePoint *point0 = (MATracePoint *)[points firstObject];
@@ -652,9 +652,9 @@ static CLLocationCoordinate2D s_coords[] =
     
     // 开始纠偏
     [self.traceManager queryProcessedTraceWith:mArr type:-1 processingCallback:^(int index, NSArray<MATracePoint *> *points) {
-        NSLog(@"纠偏分组 = %d,分组数组 = %@",index,points);
+//        NSLog(@"纠偏分组 = %d,分组数组 = %@",index,points);
     } finishCallback:^(NSArray<MATracePoint *> *points, double distance) {
-        NSLog(@"两点距离 = %f,分组数组 = %@",distance,points);
+//        NSLog(@"两点距离 = %f,分组数组 = %@",distance,points);
         finshBlock(points, YES); // 纠偏成功回调
         
     } failedCallback:^(int errorCode, NSString *errorDesc) {
